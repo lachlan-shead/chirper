@@ -26,6 +26,7 @@
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
                             </div>
+                            @if ($chirp->user->is(auth()->user()))
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button>
@@ -35,7 +36,6 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        @if ($chirp->user->is(auth()->user()))
                                             <x-dropdown-link :href="route('chirps.edit', $chirp)">
                                                 {{ __('Edit') }}
                                             </x-dropdown-link>
@@ -46,10 +46,9 @@
                                                     {{ __('Delete') }}
                                                 </x-dropdown-link>
                                             </form>
-                                        <!-- TODO: add (un)subscription routes -->
-                                        @endif
                                     </x-slot>
                                 </x-dropdown>
+                            @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                     </div>
