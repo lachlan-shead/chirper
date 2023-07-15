@@ -20,7 +20,6 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
-        // TODO: add subscription schema... how?
     }
 
     /**
