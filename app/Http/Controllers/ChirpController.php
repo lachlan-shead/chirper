@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chirp;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -86,6 +87,18 @@ class ChirpController extends Controller
         $this->authorize('delete', $chirp);
 
         $chirp->delete();
+
+        return redirect(route('chirps.index'));
+    }
+
+    /**
+     * Subscribe to the user who submitted this chirp.
+     */
+    public function subscribe(User $author): RedirectResponse
+    {
+        $this->authorize('subscribe', $author);
+
+        // TODO subscribe user
 
         return redirect(route('chirps.index'));
     }

@@ -49,6 +49,14 @@ class ChirpPolicy
     }
 
     /**
+     * Determine whether the user can subscribe to the author of a chirp.
+     */
+    public function subscribe(User $user, Chirp $chirp): bool
+    {
+        return ! $chirp->user()->is($user); // TODO: && ! isSubscribed;
+    }
+
+    /**
      * Determine whether the user can restore the model.
      */
     public function restore(User $user, Chirp $chirp): bool
