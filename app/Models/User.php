@@ -50,13 +50,13 @@ class User extends Authenticatable
         return $this->hasMany(Chirp::class);
     }
 
-    public function isSubscribedTo(): BelongsToMany
+    public function subscribedToByMe(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'subscriptions');
+        return $this->belongsToMany(User::class, 'subscriptions', 'subscriber_id', 'subscribed_to_id');
     }
 
-    public function isSubscribedToBy(): BelongsToMany
+    public function subscribedToMe(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'subscriptions');
+        return $this->belongsToMany(User::class, 'subscriptions', 'subscribed_to_id', 'subscribed_to_id');
     }
 }

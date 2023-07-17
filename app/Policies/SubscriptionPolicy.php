@@ -9,16 +9,16 @@ class SubscriptionPolicy
     /**
      * Determine whether the user can subscribe to another.
      */
-    public function subscribe(User $auth, User $user): bool
+    public function store(User $user, User $model): bool
     {
-        return ! $auth->isSubscribedTo()->where('subscribed_to_id', $user)->exists();
+        return ! $user->is($model) && ! $user->subscribedToByMe()->where('subscribed_to_id', $model->id)->exists();
     }
 
     /**
      * Determine whether the user can unsubscribe from another.
      */
-    public function unsubscribe(User $auth, User $user): bool
+    public function destroy(User $user, User $model): bool
     {
-        return $auth->isFollowing()->where('subscribed_to_id', $user)->exists();
+        return $user->subscribedToByMe()->where('subscribed_to_id', $model->id)->exists();
     }
 }
