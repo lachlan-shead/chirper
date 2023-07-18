@@ -46,18 +46,19 @@
                                                 </x-dropdown-link>
                                             </form>
                                         @elseif (! auth()->user()->subscribedToByMe()->where('subscribed_to_id', $chirp->user->id)->exists())
-                                            <form method="POST" action="{{ route('subscriptions.store', $chirp->user) }}">
+                                            <form method="POST" action="{{ route('subscriptions.store') }}">
                                                 @csrf
                                                 @method('post')
-                                                <x-dropdown-link :href="route('subscriptions.store', $chirp->user)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                <x-dropdown-link :href="route('subscriptions.store')" onclick="event.preventDefault(); this.closest('form').submit();">
                                                     {{ __('Subscribe') }}
                                                 </x-dropdown-link>
+                                                <input name="subscribe_to_user_id" type="hidden" value="{{ $chirp->user->id }}">
                                             </form>
                                         @else
-                                            <form method="POST" action="{{ route('subscriptions.destroy', $chirp->user) }}">
+                                            <form method="POST" action="{{ route('subscriptions.destroy', $chirp->user->id) }}">
                                                 @csrf
-                                                @method('destroy')
-                                                <x-dropdown-link :href="route('subscriptions.destroy', $chirp->user)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                @method('delete')
+                                                <x-dropdown-link :href="route('subscriptions.destroy', $chirp->user->id)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                     {{ __('Unsubscribe') }}
                                                 </x-dropdown-link>
                                             </form>

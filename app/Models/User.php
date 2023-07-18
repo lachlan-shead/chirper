@@ -57,6 +57,6 @@ class User extends Authenticatable
 
     public function subscribedToMe(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'subscriptions', 'subscribed_to_id', 'subscribed_to_id');
+        return $this->belongsToMany(User::class, 'subscriptions', 'subscribed_to_id', 'subscriber_id');
     }
 }

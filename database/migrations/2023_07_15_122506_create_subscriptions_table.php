@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('subscriptions', function (Blueprint $table) {
-            $table->integer('subscribed_id')->unsigned();
-            $table->foreign('subscribed_id')->references('id')->on('users');
             $table->integer('subscriber_id')->unsigned();
             $table->foreign('subscriber_id')->references('id')->on('users');
+            $table->integer('subscribed_to_id')->unsigned();
+            $table->foreign('subscribed_to_id')->references('id')->on('users');
         });
     }
 
