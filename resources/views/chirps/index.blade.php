@@ -10,7 +10,6 @@
             <x-input-error :messages="$errors->get('message')" class="mt-2" />
             <x-primary-button class="mt-4">{{ __('Chirp') }}</x-primary-button>
         </form>
-
         <div class="mt-6 bg-white shadow-sm rounded-lg divide-y">
             @foreach ($chirps as $chirp)
                 <div class="p-6 flex space-x-2">
@@ -26,7 +25,6 @@
                                     <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
                                 @endunless
                             </div>
-                            @if ($chirp->user->is(auth()->user()))
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button>
@@ -36,19 +34,37 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('chirps.edit', $chirp)">
-                                            {{ __('Edit') }}
-                                        </x-dropdown-link>
-                                        <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
-                                            @csrf
-                                            @method('delete')
-                                            <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
-                                                {{ __('Delete') }}
+                                        @if ($chirp->user->is(auth()->user()))
+                                            <x-dropdown-link :href="route('chirps.edit', $chirp)">
+                                                {{ __('Edit') }}
                                             </x-dropdown-link>
-                                        </form>
+                                            <form method="POST" action="{{ route('chirps.destroy', $chirp) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <x-dropdown-link :href="route('chirps.destroy', $chirp)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('Delete') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        @elseif (! auth()->user()->subscribedToByMe()->where('subscribed_to_id', $chirp->user->id)->exists())
+                                            <form method="POST" action="{{ route('subscriptions.store') }}">
+                                                @csrf
+                                                @method('post')
+                                                <x-dropdown-link :href="route('subscriptions.store')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('Subscribe') }}
+                                                </x-dropdown-link>
+                                                <input name="subscribe_to_user_id" type="hidden" value="{{ $chirp->user->id }}">
+                                            </form>
+                                        @else
+                                            <form method="POST" action="{{ route('subscriptions.destroy', $chirp->user->id) }}">
+                                                @csrf
+                                                @method('delete')
+                                                <x-dropdown-link :href="route('subscriptions.destroy', $chirp->user->id)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    {{ __('Unsubscribe') }}
+                                                </x-dropdown-link>
+                                            </form>
+                                        @endif
                                     </x-slot>
                                 </x-dropdown>
-                            @endif
                         </div>
                         <p class="mt-4 text-lg text-gray-900">{{ $chirp->message }}</p>
                     </div>
