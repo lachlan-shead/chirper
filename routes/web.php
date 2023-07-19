@@ -35,7 +35,9 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('subscriptions', SubscriptionController::class)
-    ->parameters(['subscriptions' => 'user',])
+    ->parameters([
+        'subscriptions' => 'user',
+    ])
     ->only(['store', 'destroy'])
     ->middleware(['auth']);
 
