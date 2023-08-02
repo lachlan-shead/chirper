@@ -53,6 +53,7 @@
                                                     {{ __('Subscribe') }}
                                                 </x-dropdown-link>
                                                 <input name="subscribe_to_user_id" type="hidden" value="{{ $chirp->user->id }}">
+                                                <input name="form_source" type="hidden" value="chirps.index">
                                             </form>
                                         @else
                                             <form method="POST" action="{{ route('subscriptions.destroy', $chirp->user->id) }}">
@@ -61,6 +62,7 @@
                                                 <x-dropdown-link :href="route('subscriptions.destroy', $chirp->user->id)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                     {{ __('Unsubscribe') }}
                                                 </x-dropdown-link>
+                                                <input name="form_source" type="hidden" value="chirps.index">
                                             </form>
                                         @endif
                                     </x-slot>

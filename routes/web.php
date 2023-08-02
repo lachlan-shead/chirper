@@ -35,10 +35,8 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('subscriptions', SubscriptionController::class)
-    ->parameters([
-        'subscriptions' => 'user',
-    ])
-    ->only(['store', 'destroy'])
+    ->parameters(['subscriptions' => 'user'])
+    ->only(['index', 'store', 'destroy'])
     ->middleware(['auth']);
 
 require __DIR__.'/auth.php';
