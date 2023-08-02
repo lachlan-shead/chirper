@@ -13,9 +13,9 @@ class ChirpTest extends TestCase
      */
     public function test_chirp_has_correct_user_assigned(): void
     {
-        $user = User::factory()->create();
+        $user = $this->loggedInUser();
         $chirp = Chirp::factory()->for($user)->create();
 
-        $this->assertEquals($user, $chirp->user);
+        $this->assertTrue($user->is($chirp->user));
     }
 }

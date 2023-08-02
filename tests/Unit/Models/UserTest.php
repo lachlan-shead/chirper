@@ -14,7 +14,7 @@ class UserTest extends TestCase
     public function test_user_chirps_method_gets_right_records(): void
     {
         $userWithNoChirps = User::factory()->create();
-        $userPostingChirps = User::factory()->create();
+        $userPostingChirps = $this->loggedInUser();
         $chirp1 = Chirp::factory()->for($userPostingChirps)->create();
         $chirp2 = Chirp::factory()->for($userPostingChirps)->create();
 
