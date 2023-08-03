@@ -19,7 +19,7 @@
                         {{ __('Chirps') }}
                     </x-nav-link>
                     <x-nav-link :href="route('subscriptions.index')" :active="request()->routeIs('subscriptions.index')">
-                        {{ __('Subscriptions') }}
+                        {{ __('Subscribers') }}
                     </x-nav-link>
                 </div>
             </div>

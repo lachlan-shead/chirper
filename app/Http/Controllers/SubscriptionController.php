@@ -33,7 +33,7 @@ class SubscriptionController extends Controller
 
         $request->user()->subscribedToByMe()->attach($user->id);
 
-        return redirect(route($request->form_source));
+        return back();
     }
 
     /**
@@ -47,6 +47,6 @@ class SubscriptionController extends Controller
 
         $request->user()->subscribedToByMe()->detach($user->id);
 
-        return redirect(route($request->form_source));
+        return back();
     }
 }
