@@ -34,9 +34,11 @@ Route::resource('chirps', ChirpController::class)
     ->only(['index', 'store', 'edit', 'update', 'destroy'])
     ->middleware(['auth', 'verified']);
 
-Route::resource('subscriptions', SubscriptionController::class)
-    ->parameters(['subscriptions' => 'user'])
-    ->only(['index', 'store', 'destroy'])
-    ->middleware(['auth']);
+Route::middleware('auth')->group(function () {
+    Route::get('subscriptions', [SubscriptionController::class, 'index'])->name('subscriptions.index');
+    Route::post('subscriptions/{user}', [SubscriptionController::class, 'store'])->name('subscriptions.store');
+    Route::delete('subscriptions/{user}', [SubscriptionController::class, 'destroy'])->name('subscriptions.destroy');
+});
+
 
 require __DIR__.'/auth.php';

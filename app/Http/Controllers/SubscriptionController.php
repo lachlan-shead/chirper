@@ -23,10 +23,8 @@ class SubscriptionController extends Controller
     /**
      * Subscribe to a user's chirps.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, User $user): RedirectResponse
     {
-        $user = User::findOrFail($request->subscribe_to_user_id);
-
         if (! Gate::allows('subscribe', $user)) {
             abort(403);
         }

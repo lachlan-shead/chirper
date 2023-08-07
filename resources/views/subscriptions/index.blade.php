@@ -34,13 +34,12 @@
                                         </x-slot>
                                         <x-slot name="content">
                                             @if (! auth()->user()->subscribedToByMe()->where('subscribed_to_id', $subscriber->id)->exists())
-                                                <form method="POST" action="{{ route('subscriptions.store') }}">
+                                                <form method="POST" action="{{ route('subscriptions.store', $subscriber->id) }}">
                                                     @csrf
                                                     @method('post')
-                                                    <x-dropdown-link :href="route('subscriptions.store')" onclick="event.preventDefault(); this.closest('form').submit();">
+                                                    <x-dropdown-link :href="route('subscriptions.store', $subscriber->id)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                         {{ __('Subscribe') }}
                                                     </x-dropdown-link>
-                                                    <input name="subscribe_to_user_id" type="hidden" value="{{ $subscriber->id }}">
                                                 </form>
                                             @else
                                                 <form method="POST" action="{{ route('subscriptions.destroy', $subscriber->id) }}">
